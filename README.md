@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Serneum/gae-tasks.svg?branch=master)](https://travis-ci.org/Serneum/gae-tasks)
+[![Build Status](https://travis-ci.org/Serneum/TaskManager.svg?branch=java)](https://travis-ci.org/Serneum/TaskManager)
 
 ### Functionality
 - Create tasks
