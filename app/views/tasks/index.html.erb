@@ -12,69 +12,36 @@
             <th style="width: 10%">Completed</th>
             <th style="width: 10%"></th>
           </tr>
-          <c:choose>
-            <c:when test="${empty taskList}">
+          <% if !current_user.tasks || current_user.tasks.empty? %>
+            <tr>
+              <td colspan="5" style="text-align: center">There are no tasks.</td>
+            </tr>
+          <% else %>
+            <% current_user.tasks.each_with_index do |task, index| %>
               <tr>
-                <td colspan="5" style="text-align: center">There are no tasks.</td>
+                <td><%= index + 1 %></td>
+                <td><%= task.description %></td>
+                <td style="color: <%= task.due_date < Time.now && !task.completed %> ? "red" : "green"}">
+                  <%= task.due_date.to_formatted_s(:task) %>
+                </td>
+                <td><%= task.completed %></td>
+                <td>
+                  <c:if test="${not inEditMode}">
+                    <a href="/tasks?edit=${task.id}" class="btn" role="button">
+                    <span class="glyphicon glyphicon-pencil"> Edit</span>
+                    </a>
+                  </c:if>
+                </td>
               </tr>
-            </c:when>
-            <c:otherwise>
-              <c:forEach var="task" items="${taskList}" varStatus="loop">
-                <tr>
-                  <td>${loop.index + 1}</td>
-                  <td>${task.description}</td>
-                  <jsp:useBean id="now" class="java.util.Date"/>
-                  <td style="color: ${task.dueDate lt now and not task.completed ? "red" : "green"}">
-                  ${task.formattedDueDate}
-                  </td>
-                  <td>${task.completed}</td>
-                  <td>
-                    <c:if test="${not inEditMode}">
-                      <a href="/tasks?edit=${task.id}" class="btn" role="button">
-                      <span class="glyphicon glyphicon-pencil"> Edit</span>
-                      </a>
-                    </c:if>
-                  </td>
-                </tr>
-              </c:forEach>
-            </c:otherwise>
-          </c:choose>
+            <% end %>
+          <% end %>
         </table>
       </div>
       <br/>
       <c:if test="${not empty error}">
         <div class="alert alert-danger">${error}</div>
       </c:if>
-      <form action="#" method="post">
-        <div class="panel panel-default">
-          <div class="panel-heading">${inEditMode ? "Edit" : "Create New"} Task</div>
-          <table class="table">
-            <tr>
-              <td>Description:</td>
-              <td><textarea name="description" rows="3" cols="60">${inEditMode ? editTask.description : ""}</textarea></td>
-            </tr>
-            <tr>
-              <td>Due Date:</td>
-              <td><input type="date" name="dueDate" value="${inEditMode ? editTask.formattedDueDate : ""}"></td>
-            </tr>
-            <tr>
-              <td>Completed:</td>
-              <td>
-                <input type="checkbox" name="completed"
-                <c:if test="${inEditMode && editTask.completed}">checked="checked"</c:if>
-                />
-              </td>
-            </tr>
-            <c:if test="${inEditMode}">
-              <input type="hidden" name="taskId" value="${editTask.id}">
-            </c:if>
-          </table>
-        </div>
-        <button type="submit" class="btn btn-primary">
-        <span class="glyphicon glyphicon-floppy-save" aria-hidden="true"></span>
-        Save Task
-        </button>
-      </form>
+      <%= render 'form' %>
     </div>
   </body>
 </html>
