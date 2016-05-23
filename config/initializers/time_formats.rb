@@ -1,1 +1,1 @@
-Time::DATE_FORMATS[:task] = %F
+Time::DATE_FORMATS[:task] = "%F"
