@@ -1,6 +1,15 @@
-<%= form_for([@task, current_user.tasks.build]) do |f| %>
+<%= form_for(@task) do |f| %>
+
+  <% if @task.errors.any? %>
+    <div class="alert alert-danger">
+      <% @task.errors.full_messages.each do |msg| %>
+        <%= msg %>
+      <% end %>
+    </div>
+  <% end %>
+
   <div class="panel panel-default">
-    <div class="panel-heading">${inEditMode ? "Edit" : "Create New"} Task</div>
+    <div class="panel-heading"><%= @task.persisted? ? "Edit" : "Create New"%> Task</div>
     <table class="table">
       <tr>
         <td>Description:</td>
@@ -8,7 +17,7 @@
       </tr>
       <tr>
         <td>Due Date:</td>
-        <td><%= date_field("task", "due_date", value: :due_date) %></td>
+        <td><%= date_field("task", "due_date", value: @task.due_date.to_formatted_s(:task)) %></td>
       </tr>
       <tr>
         <td>Completed:</td>
