@@ -17,7 +17,7 @@
       </tr>
       <tr>
         <td>Due Date:</td>
-        <td><%= date_field("task", "due_date", value: @task.due_date.to_formatted_s(:task)) %></td>
+        <td><%= date_field("task", "due_date", value: @task.due_date ? @task.due_date.to_formatted_s(:task) : "") %></td>
       </tr>
       <tr>
         <td>Completed:</td>

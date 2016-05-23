@@ -14,7 +14,7 @@
           <td colspan="5" style="text-align: center">There are no tasks.</td>
         </tr>
       <% else %>
-        <% current_user.tasks.each_with_index do |task, index| %>
+        <% current_user.tasks.order(completed: :asc, due_date: :asc).each_with_index do |task, index| %>
           <tr>
             <td><%= index + 1 %></td>
             <td><%= task.description %></td>
