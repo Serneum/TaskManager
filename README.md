@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Serneum/TaskManager.svg?branch=master)](https://travis-ci.org/Serneum/gae-tasks)
+[![Build Status](https://travis-ci.org/Serneum/TaskManager.svg?branch=master)](https://travis-ci.org/Serneum/TaskManager)
 
 ### Functionality
 - Create tasks
@@ -8,8 +8,7 @@
 - Redirect to login page when not authenticated
 
 ### How to use
-Assuming you have Tomcat set up in /Library/Tomcat, just run
 ```
-gradle deploy
+rails s
 ```  
-Then, start Tomcat and point your browser to `http://localhost:8080/tasks`
+Point your browser to `http://localhost:3000`
